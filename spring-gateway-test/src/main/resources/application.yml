@@ -1,0 +1,33 @@
+eureka:
+  client:
+    serviceUrl: #注册中心的地址
+      defaultZone: http://127.0.0.1:8888/eureka/
+server:
+  port: 9995  #服务端口号
+
+logging:
+  level:
+    root: INFO
+
+spring:
+  application:
+    name: spring-gateway #提供者的服务名称--调用的时候根据改名称来调用对应服务的方法
+  cloud:
+    gateway:
+      routes:
+        - id: eureka-client-provider-route
+          uri: lb://eureka-client-provider
+          predicates:
+            - Path=/eureka-client-provider/**
+          filters:
+            - StripPrefix=1
+        - id: openfeign-test-route
+          uri: lb://openfeign-test
+          predicates:
+          - Path=/openfeign-test/**
+          filters:
+            - StripPrefix=1
+#        - id: nginx
+#          uri: http://10.99.66.94:9003
+#          predicates:
+#            - Path=/**

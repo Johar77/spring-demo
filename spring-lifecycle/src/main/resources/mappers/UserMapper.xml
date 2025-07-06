@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.johar.test.springlifecycle.dao.repository.UserMapper">
+
+    <resultMap id="userBoResultMap" type="com.johar.test.springlifecycle.bo.UserBO">
+        <id property="id" column="id" />
+        <result property="age" column="age"/>
+        <result property="name" column="name"/>
+        <result property="sex" column="sex"/>
+        <association property="company"
+                     select="com.johar.test.springlifecycle.dao.repository.CompanyMapper.findById"
+                     column="company_id"/>
+    </resultMap>
+
+    <select id="findByName" parameterType="String" resultType="com.johar.test.springlifecycle.dao.entity.UserEntity">
+        select * from t_user where name = #{name}
+    </select>
+
+    <select id="findById" parameterType="int" resultMap="userBoResultMap">
+        select * from t_user where id = #{id}
+    </select>
+
+    <select id="findWithPage" resultType="com.johar.test.springlifecycle.dao.entity.UserEntity">
+        select *
+        from t_user
+        <where>
+            <!--            <if test="name != null">name like  '%${name}%' </if>-->
+            <!--            <if test="name != null">name like  "%"#{name,jdbcType=VARCHAR}"%" </if>-->
+            <if test="name != null">name like CONCAT('%', #{name,jdbcType=VARCHAR}, '%') </if>
+            <if test="maxAge != null and minAge != null"> and age between #{minAge} and #{maxAge}</if>
+        </where>
+    </select>
+
+    <insert id="insert"  parameterType="com.johar.test.springlifecycle.dao.entity.UserEntity" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into t_user (id, name, age, sex) values (#{userEntity.id}, #{userEntity.name}, #{userEntity.age}, #{userEntity.sex})
+    </insert>
+
+    <insert id="batchInsert" parameterType="java.util.List" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        insert into t_user (id, name, age, sex)
+        values
+        <foreach collection="userList" separator="," item="userEntity">
+            (#{userEntity.id}, #{userEntity.name}, #{userEntity.age}, #{userEntity.sex})
+        </foreach>
+    </insert>
+
+    <update id="updateBatch" parameterType="com.johar.test.springlifecycle.dao.entity.UserEntity">
+        <foreach collection="list" item="item" index="index" separator=";">
+            update t_user set
+            <if test="item.name != null">
+                name = #{item.name,jdbcType=VARCHAR}
+            </if>
+
+            where id = #{item.id,jdbcType=BIGINT}
+        </foreach>
+    </update>
+
+    <select id="selectCount" resultType="long">
+        select count(*) from t_user;
+    </select>
+
+    <select id="selectAll" resultType="map">
+        select id, name from t_user;
+    </select>
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.johar.mybatis.mybatistest.mapper.UserMapper">
+
+    <sql id="baseColumn" >
+        name, age, sex, company_id
+    </sql>
+
+    <resultMap id="BaseResultMap" type="com.johar.mybatis.mybatistest.po.User">
+        <id property="id" javaType="java.lang.Integer" column="id" jdbcType="INTEGER"/>
+        <result property="name" javaType="java.lang.String" column="name" jdbcType="VARCHAR"/>
+        <result property="age" javaType="java.lang.Integer" column="age" jdbcType="TINYINT" />
+        <result property="sex" javaType="java.lang.Integer" column="sex" jdbcType="TINYINT"/>
+        <association property="company" javaType="com.johar.mybatis.mybatistest.po.Company" column="company_id" select="com.johar.mybatis.mybatistest.mapper.CompanyMapper.selectCompanyById">
+            <id property="id" javaType="java.lang.Integer" column="id" jdbcType="INTEGER"/>
+            <result property="name" javaType="java.lang.String" column="name" jdbcType="VARCHAR"/>
+            <result property="address" javaType="java.lang.String" column="address" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <select id="selectUserById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from t_user where id = #{id}
+    </select>
+
+    <select id="getAll" resultMap="BaseResultMap">
+        select * from t_user
+    </select>
+
+    <insert id="save" parameterType="com.johar.mybatis.mybatistest.dto.CreateUserDTO" useGeneratedKeys="true" keyProperty="id" >
+        INSERT INTO t_user
+            ( <include refid="baseColumn"></include> )
+        VALUES(#{name}, #{age}, #{sex}, #{companyId})
+    </insert>
+
+    <update id="updateById" parameterType="com.johar.mybatis.mybatistest.po.User">
+        update t_user
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

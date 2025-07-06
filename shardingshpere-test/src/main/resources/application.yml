@@ -1,0 +1,61 @@
+server:
+  port: 8113  #服务端口号
+
+logging:
+  level:
+    root: INFO
+
+spring:
+  application:
+    name: shardingshpere-test #提供者的服务名称--调用的时候根据改名称来调用对应服务的方法
+  shardingsphere:
+    mode:
+      type: Standalone
+      repository:
+        type: File
+      overwrite: true
+
+    datasource:
+      name: ds
+      ds:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3326/db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+        username: root
+        password: root
+        max-total: 100
+    rules:
+      encrypt:
+        # 加密算法配置
+        encryptors:
+          name-encryptor:
+            props:
+              aes-key-value: 123456abc
+            type: AES
+          idcard-encryptor:
+            props:
+              aes-key-value: 123456abc
+            type: AES
+
+        tables:
+          t_customer: # 加密表名称
+            columns:
+              user_name: # 加密列名称
+                cipherColumn: user_name_enc
+                encryptorName: name-encryptor
+              id_card: # 加密列名称
+                cipherColumn: id_card_enc
+                encryptorName: idcard-encryptor
+
+
+    props:
+      sql-show: true
+      query:
+        with:
+          cipher:
+            column: true
+
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.johar.shardingshpere.model

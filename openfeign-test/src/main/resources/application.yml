@@ -1,0 +1,35 @@
+server:
+  port: 9996
+spring:
+  application:
+    name: openfeign-test
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl: #注册中心的地址
+      defaultZone: http://127.0.0.1:8888/eureka/
+
+feign:
+  client:
+    config:
+      default:
+        connectionTimeout: 10000
+        readTimeout: 10000
+  circuitbreaker:
+    enabled: true
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      # 是否向 Actuator 的 HealthIndicator 注册
+      registerHealthIndicator: true
+      slidingWindowSize: 10
+      minimumNumberOfCalls: 5
+      slidingWindowType: TIME_BASED
+      permittedNumberOfCallsInHalfOpenState: 3
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 2s
+      failureRateThreshold: 30
+      recordExceptions:
+        - java.lang.Exception

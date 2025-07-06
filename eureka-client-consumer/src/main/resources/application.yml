@@ -1,0 +1,11 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl: #注册中心的地址
+      defaultZone: http://127.0.0.1:8888/eureka/
+server:
+  port: 9997  #服务端口号
+spring:
+  application:
+    name: service-client-consumer #提供者的服务名称--调用的时候根据改名称来调用对应服务的方法

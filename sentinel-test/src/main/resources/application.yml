@@ -1,0 +1,13 @@
+server:
+  port: 8061
+  servlet:
+    context-path: /sentinel-test
+
+spring:
+  application:
+    name: sentinel-test
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+      eager: true
