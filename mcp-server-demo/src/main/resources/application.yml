@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: mcp-server-demo
+    version: 1.0.0
+  ai:
+    mcp:
+      server:
+        enabled: true
+        name: mcp-server-demo
+        version: 1.0.0
+        type: async
+        instructions: "This reactive server provides weather information tools and resources"
+        sse-message-endpoint: /sse
+        capabilities:
+          tool: true
+          resource: true
+          prompt: true
+          completion: true
