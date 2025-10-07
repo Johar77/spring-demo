@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: decebal
+Build-Jdk: 17
+Plugin-Class: com.johar.test.WelcomePlugin
+Plugin-Dependencies: 3.13.0
+Plugin-Id: welcome-plugin
+Plugin-Provider: johar
+Plugin-Version: 0.0.1
