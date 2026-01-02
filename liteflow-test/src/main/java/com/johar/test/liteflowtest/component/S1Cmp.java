@@ -7,20 +7,21 @@ import com.yomahub.liteflow.slot.DefaultContext;
 /**
  * @author : [johar]
  * @description : [一句话描述该类的功能]
- * @createTime : [2025/10/2 15:11]
+ * @createTime : [2025/12/17 23:21]
  * @updateUser : [johar]
- * @updateTime : [2025/10/2 15:11]
+ * @updateTime : [2025/12/17 23:21]
  * @updateRemark : [说明本次修改内容]
  * @since : [v1.0]
  */
-@LiteflowComponent("b")
-public class BCmp extends NodeComponent {
+@LiteflowComponent("s1")
+public class S1Cmp extends NodeComponent {
+
     @Override
     public void process() throws Exception {
-        Thread.sleep(1000*5);
+        Thread.sleep(1000*3);
         DefaultContext defaultContext = this.getContextBean(DefaultContext.class);
-        defaultContext.setData("b", "b");
+        defaultContext.setData("s1", "s1");
         System.out.println(this.getCurrChainId() + ":defaultContext: " + defaultContext.getDataMap());
-        System.out.println(this.getCurrChainId() + ":BCmp executed");
+        System.out.println(this.getCurrChainId() + ":S1Cmp executed");
     }
 }

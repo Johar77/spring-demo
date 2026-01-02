@@ -1,0 +1,68 @@
+{
+    "ruleCode": "vip_discount_2025",
+    "ruleName": "VIP用户满100减20优惠券",
+    "ruleType": "COUPON",
+    "priority": 100,
+    "status": 1,
+    "conditions": [
+        {
+            "type": "COMPOSITE",
+            "expressions": [
+                {
+                    "type": "COMPOSITE",
+                    "expressions":[
+                        {
+                            "type": "condition",
+                            "field": "userLevel",
+                            "operator": "EQUAL",
+                            "value": "VIP"
+                        },
+                        {
+                            "type": "logic",
+                            "operator": "OR"
+                        },
+                        {
+                            "type": "condition",
+                            "field": "orderAmount",
+                            "operator": "GREATER_THAN_OR_EQUAL",
+                            "value": 100
+                        }
+                    ]
+                },
+                {
+                    "type": "logic",
+                    "operator": "AND"
+                },
+                {
+                    "type": "COMPOSITE",
+                    "expressions": [
+                        {
+                            "type": "condition",
+                            "field": "productCategory",
+                            "operator": "EQUAL",
+                            "value": "electronics"
+                        },
+                        {
+                            "type": "logic",
+                            "operator": "OR"
+                        },
+                        {
+                            "type": "condition",
+                            "field": "productCategory",
+                            "operator": "EQUAL",
+                            "value": "clothing"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "type": "DISCOUNT",
+            "params": {
+                "discountRate": 0.8
+            }
+        }
+    ]
+}

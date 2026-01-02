@@ -8,6 +8,7 @@ server:
 logging:
   level:
     root: INFO
+    org.springframework.boot.actuator: debug  # Actuator调试日志
 
 spring:
   application:
@@ -79,5 +80,25 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.johar.mybatis.mybatistest.mapper
 
+
+# Actuator核心配置（关键）
+management:
+  # 1. 暴露监控端点（必须包含prometheus）
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,health,info  # 暴露prometheus端点（核心），health/info可选
+      base-path: /actuator  # 端点基础路径，默认/actuator
+  # 2. 指标配置（对接Prometheus）
+  metrics:
+    # 为所有指标添加通用标签（如应用名、环境），方便Prometheus按应用筛选
+    tags:
+      application: ${spring.application.name}
+      env: dev
+    # Prometheus指标格式配置（可选）
+    export:
+      prometheus:
+        enabled: true  # 启用Prometheus导出（默认true）
+        step: 10s      # 指标采集步长（默认10s）
 
 

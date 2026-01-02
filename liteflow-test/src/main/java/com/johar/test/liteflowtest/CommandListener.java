@@ -1,8 +1,9 @@
 package com.johar.test.liteflowtest;
 
-import com.ql.util.express.DefaultContext;
+
 import com.yomahub.liteflow.core.FlowExecutor;
 import com.yomahub.liteflow.flow.LiteflowResponse;
+import com.yomahub.liteflow.slot.DefaultContext;
 import jakarta.annotation.Resource;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,10 @@ public class CommandListener implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         System.out.println("CommandListener.run");
-        LiteflowResponse response = flowExecutor.execute2Resp("chain1", "arg", DefaultContext.class);
+        LiteflowResponse response = flowExecutor.execute2Resp("chain4", "arg", DefaultContext.class);
         System.out.println(response);
+
+//        LiteflowResponse response2 = flowExecutor.execute2Resp("chain2", "arg", DefaultContext.class);
+//        System.out.println(response2);
     }
 }

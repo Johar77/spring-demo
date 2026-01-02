@@ -2,6 +2,8 @@ package com.johar.test.liteflowtest.component;
 
 import com.yomahub.liteflow.annotation.LiteflowComponent;
 import com.yomahub.liteflow.core.NodeComponent;
+import com.yomahub.liteflow.slot.DefaultContext;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author : [johar]
@@ -13,9 +15,14 @@ import com.yomahub.liteflow.core.NodeComponent;
  * @since : [v1.0]
  */
 @LiteflowComponent("a")
-public class Acmp extends NodeComponent {
+@Slf4j
+public class ACmp extends NodeComponent {
     @Override
     public void process() throws Exception {
-        System.out.println("a组件执行");
+        Thread.sleep(1000*10);
+        DefaultContext defaultContext = this.getContextBean(DefaultContext.class);
+        defaultContext.setData("a", "a");
+        System.out.println(this.getCurrChainId() + ":defaultContext: " + defaultContext.getDataMap());
+        System.out.println(this.getCurrChainId() + ":ACmp executed");
     }
 }

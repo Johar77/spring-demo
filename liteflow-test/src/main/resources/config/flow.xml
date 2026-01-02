@@ -3,4 +3,45 @@
     <chain name="chain1">
         THEN(a, b, c);
     </chain>
+
+    <chain name="chain2">
+        ITERATOR(x).parallel(true).DO(THEN(a, b));
+    </chain>
+
+    <chain name="chain3">
+        THEN(WHEN(a, b).maxWaitSeconds(10000), c);
+    </chain>
+
+    <!--
+        WHEN(
+            THEN(文本加工1-1,
+                WHEN(
+                    THEN(文本加工1-3,THEN(文本加工2-4,THEN(文本加工1-5).id("文本加工1-5")).id("文本加工2-4")).id("文本加工1-3"),
+                    THEN(文本加工1-2,THEN(文本加工1-4,THEN(文本加工1-5).id("文本加工1-5")).id("文本加工1-4"))
+                 .id("文本加工1-2"))).id("文本加工1-1"),
+             THEN(文本加工2-1,
+                  WHEN(
+                    THEN(文本加工2-2,THEN(文本加工1-4,THEN(文本加工1-5).id("文本加工1-5")).id("文本加工1-4")).id("文本加工2-2"),
+                    THEN(文本加工2-3,THEN(文本加工2-4,THEN(文本加工1-5).id("文本加工1-5")).id("文本加工2-4"))
+                  .id("文本加工2-3"))).id("文本加工2-1"))
+
+    -->
+    <chain name="chain4">
+        THEN(WHEN(THEN(WHEN(a, b).maxWaitSeconds(10000), e), THEN(WHEN(c, d).maxWaitSeconds(10000),f)), g);
+    </chain>
+
+    <chain name="chain5">
+        WHEN(
+            THEN(s1,
+                WHEN(
+                    THEN(b,THEN(f,THEN(g).id("g")).id("f")).id("b"),
+                    THEN(a,THEN(e,THEN(g).id("g")).id("e"))
+                    .id("a"))).id("s1").maxWaitSeconds(10000),
+            THEN(s2,
+                WHEN(
+                    THEN(c,THEN(e,THEN(g).id("g")).id("e")).id("c"),
+                    THEN(d,THEN(f,THEN(g).id("g")).id("f"))
+                    .id("d"))).id("s2").maxWaitSeconds(10000)
+        ).maxWaitSeconds(10000)
+    </chain>
 </flow>

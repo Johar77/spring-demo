@@ -2,6 +2,7 @@ package com.johar.test.liteflowtest.component;
 
 import com.yomahub.liteflow.annotation.LiteflowComponent;
 import com.yomahub.liteflow.core.NodeComponent;
+import com.yomahub.liteflow.slot.DefaultContext;
 
 /**
  * @author : [johar]
@@ -16,6 +17,10 @@ import com.yomahub.liteflow.core.NodeComponent;
 public class CCmp extends NodeComponent {
     @Override
     public void process() throws Exception {
-        System.out.println("CCmp executed");
+        Thread.sleep(1000*6);
+        DefaultContext defaultContext = this.getContextBean(DefaultContext.class);
+        defaultContext.setData("c", "c");
+        System.out.println(this.getCurrChainId() + ":defaultContext: " + defaultContext.getDataMap());
+        System.out.println(this.getCurrChainId() + ":CCmp executed");
     }
 }
