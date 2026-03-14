@@ -1,6 +1,7 @@
 package com.johar.mybatis.mybatistest.po;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.ToString;
 
@@ -20,23 +21,30 @@ import java.util.Date;
 @ToString
 public class TableMetaBase implements Serializable {
     @JSONField(name = "table_id")
+    @JsonProperty("table_id")
     private String tableId;
 
     @JSONField(name = "db_table_name")
+    @JsonProperty("db_table_name")
     private String dbTableName;
 
     @JSONField(name = "table_name")
+    @JsonProperty("table_name")
     private String description;
 
     @JSONField(name = "create_time")
+    @JsonProperty("create_time")
     private Date createTime;
 
     @JSONField(name = "update_time")
+    @JsonProperty("update_time")
     private Date updateTime;
 
     @JSONField(name = "create_by")
+    @JsonProperty("create_by")
     private String createBy;
 
     @JSONField(name = "update_by")
+    @JsonProperty("update_by")
     private String updateBy;
 }

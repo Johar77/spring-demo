@@ -1,11 +1,13 @@
 package com.johar.mybatis.mybatistest.po;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.ToString;
 
-import java.io.Serializable;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,16 +25,23 @@ import java.util.Map;
 @ToString(callSuper = true)
 public class TableMetaES extends TableMetaBase {
 
-    @JSONField(unwrapped = true, serialize = true,deserialize = true)
-    // 使用Map存储动态向量字段，键为"vector_128"、"vector_512"等
+    @JSONField(unwrapped = true, serialize = true, deserialize = true)
     private Map<String, List<Float>> vectorFields = new HashMap<>();
 
-    // 添加向量字段的方法
+    @JsonAnyGetter
+    public Map<String, List<Float>> getVectorFields() {
+        return vectorFields;
+    }
+
+    @JsonAnySetter
+    public void setVectorField(String key, List<Float> value) {
+        this.vectorFields.put(key, value);
+    }
+
     public void addVectorField(String fieldName, List<Float> vector) {
         vectorFields.put(fieldName, vector);
     }
 
-    // 获取向量字段的方法
     public List<Float> getVectorField(String fieldName) {
         return vectorFields.get(fieldName);
     }
