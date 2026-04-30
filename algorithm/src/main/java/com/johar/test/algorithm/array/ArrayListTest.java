@@ -1,7 +1,6 @@
 package com.johar.test.algorithm.array;
 
 import org.springframework.util.StringUtils;
-import sun.misc.LRUCache;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

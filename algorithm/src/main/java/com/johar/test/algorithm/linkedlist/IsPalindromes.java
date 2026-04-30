@@ -1,7 +1,5 @@
 package com.johar.test.algorithm.linkedlist;
 
-import jdk.nashorn.internal.ir.IfNode;
-
 import java.util.Objects;
 
 /**
